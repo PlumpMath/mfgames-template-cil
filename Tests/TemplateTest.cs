@@ -27,7 +27,7 @@ namespace MfGames.Template.Tests
         {
             // Create the basic factory with defaults
             factory = new TemplateFactory();
-            factory.RegisterIncludePattern(Path.Combine("Tests", "{0}.template"));
+            factory.RegisterIncludePattern("{0}.template");
             factory.Register("Var1", "var1", typeof(string));
         }
         #endregion

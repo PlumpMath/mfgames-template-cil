@@ -1,6 +1,7 @@
 using MfGames.Template;
 using MfGames.Utility;
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Xml;
 
@@ -12,7 +13,7 @@ using System.Xml;
 public class PrecompileTool
 : Logable, ITool
 {
-#region Processing
+	#region Processing
     /// <summary>
     /// Executes the tool with the given parameters.
     /// </summary>
@@ -33,9 +34,9 @@ public class PrecompileTool
 			factory.Create(reader, templateFile.FullName);
 		}
 	}
-#endregion
+	#endregion
 
-#region Properties
+	#region Properties
 	private FileInfo templateFile;
 	private FileInfo outputFile;
 	private string ns = "TemporaryNamespace";
@@ -45,8 +46,8 @@ public class PrecompileTool
 	/// <summary>
 	/// Sets and contains the name of the class to generate.
 	/// </summary>
-	[LongArgument("class", HasParameter = true)]
-	public string ClassName
+	[Optional("class")]
+		public string ClassName
 	{
 		set { classname = value; }
 	}
@@ -54,8 +55,8 @@ public class PrecompileTool
 	/// <summary>
 	/// Sets and contains the extend class to use.
 	/// </summary>
-	[LongArgument("extends", HasParameter = true)]
-	public string ExtendsName
+	[Optional("extends")]
+		public string ExtendsName
 	{
 		set { extendclass = value; }
 	}
@@ -63,10 +64,9 @@ public class PrecompileTool
     /// <summary>
     /// Sets the output filename, from the command-line.
     /// </summary>
-    [Positional(1, IsOptional = false,
-			Name = "output",
-			Description = "Output file to generate.")]
-    public string OutputFilename
+	[Description("Output file to generate")]
+		[Positional(1)]
+		public string OutputFilename
     {
 		set
 		{
@@ -83,8 +83,8 @@ public class PrecompileTool
 	/// <summary>
 	/// Sets and contains the name of the namespace to generate.
 	/// </summary>
-	[LongArgument("namespace", HasParameter = true)]
-	public string NamespaceName
+	[Optional("namespace")]
+		public string NamespaceName
 	{
 		set { ns = value; }
 	}
@@ -92,10 +92,9 @@ public class PrecompileTool
     /// <summary>
     /// Sets the preference filename, which loads it into memory.
     /// </summary>
-    [Positional(0, IsOptional = false,
-			Name = "template",
-			Description = "Template file to parse.")]
-    public string TemplateFilename
+    [Positional(0)]
+		[Description("Template file to parse.")]
+		public string TemplateFilename
     {
 		set
 		{
@@ -125,5 +124,5 @@ public class PrecompileTool
 	{
 		get { return "precompile"; }
 	}
-#endregion
+	#endregion
 }
